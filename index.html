@@ -8,12 +8,13 @@
   <meta name="Generator" content="zr2html.sh">
   <link rel="shortcut icon" type="image/x-icon" href="favicon.ico?">
   <script>
-  function ladefehler() {
+  function ladefehler(ec) {
     var p = document.createElement("p");
     p.style = "text-align:center; font-size:200%;"
-    p.innerHTML = 'Der Inhalt konnte nicht geladen werden.<br>' +
+    p.innerHTML = 'Ladefehler "' + ec + '"<br>' +
+    'Der Inhalt konnte nicht geladen werden.<br>' +
     'Bitte versuchen Sie es später noch einmal und laden neu:<br>' +
-    '  <a href="https://www.magentacloud.de/api/sharelink/download?id=M3iIEPIF">kreise_neu.html</a>';
+    '  <a href="https://pbiebricher.github.io/COVID-19_Zeitreihen.html">COVID-19_Zeitreihen.html</a>';
     document.getElementById("ladeDIV").appendChild(p);
   }
 
@@ -39,7 +40,7 @@
         verzeichnis();
       } );
     }, function error (ec) {
-      console.log("accessToken Fehler " + ec);
+      ladefehler("accessToken Fehler " + ec);
     } );
   }
  
@@ -61,11 +62,11 @@
           script.src = "https://www.magentacloud.de/api/file?attachment=true&pid="+fileIDs["js"]+"&access_token="+accessToken;
           script.type = "application/javascript";
           script.async = false;
-          script.setAttribute("onerror", "ladefehler()");
+          script.setAttribute("onerror", "ladefehler('Anwendung')");
           document.head.appendChild(script);
       } );
     }, function error (ec) {
-      console.log("fileIDs Fehler " + ec);
+      ladefehler("fileIDs Fehler " + ec);
     } );
   }
   </script>
