@@ -1,82 +1,10 @@
 <!DOCTYPE html>
 <html lang=de>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
-  <title>COVID-19: Zeitreihe der täglichen Neuinfektionen</title>
-  <meta name="ProgId" content="bash">
-  <meta name="Generator" content="zr2html.sh">
-  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico?">
   <script>
-  function ladefehler(ec) {
-    var p = document.createElement("p");
-    p.style = "text-align:center; font-size:200%;"
-    p.innerHTML = 'Ladefehler "' + ec + '"<br>' +
-    'Der Inhalt konnte nicht geladen werden.<br>' +
-    'Bitte versuchen Sie es später noch einmal und laden neu:<br>' +
-    '  <a href="https://pbiebricher.github.io/COVID-19_Zeitreihen.html">COVID-19_Zeitreihen.html</a>';
-    document.getElementById("ladeDIV").appendChild(p);
-  }
-
-  const COVID_19_version = 2;
-  var timer_start = performance.now(),
-      accessToken = "",
-      fileIDs = {};
-      localRun = false;
-
-  function accessCode () {
-    var acturl = "https://www.magentacloud.de/api/share/token";
-    fetch(acturl, {
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      body: "id=oq-nzbjhi0"
-    } )
-    .then(function success (response) { 
-      response.json()
-      .then(function (json) {
-        accessToken = json.access_token;
-        verzeichnis();
-      } );
-    }, function error (ec) {
-      ladefehler("accessToken Fehler " + ec);
-    } );
-  }
- 
-  function verzeichnis () {
-    var dirurl = "https://www.magentacloud.de/api/dir?path=/&fields=id%2Cpath%2Cmembers.id%2Cmembers.name&members=all&limit=0%2C5";
-    fetch(dirurl, {
-      headers: {
-        'Authorization': 'Bearer ' + accessToken
-      }
-    } )
-    .then(function success (response) { 
-      response.json()
-      .then(function (json) {
-          var members = json.members;
-          for (i in members) {
-            fileIDs[members[i].name.replace(/[^.]+\./, "")] = members[i].id;
-          }
-          const script = document.createElement('script');
-          script.src = "https://www.magentacloud.de/api/file?attachment=true&pid="+fileIDs["js"]+"&access_token="+accessToken;
-          script.type = "application/javascript";
-          script.async = false;
-          script.setAttribute("onerror", "ladefehler('Anwendung')");
-          document.head.appendChild(script);
-      } );
-    }, function error (ec) {
-      ladefehler("fileIDs Fehler " + ec);
-    } );
-  }
+    window.location.replace("https://www.pbiebricher.de/COVID-19_Zeitreihen.html"+window.location.search);
   </script>
 </head>
-<body id="bi_body" onload="accessCode()">
-<div id="ladeDIV" style="width:100%;">
-<p style="text-align:center; font-size:200%;">COVID-19: Zeitreihe der täglichen Neuinfektionen <span id=splashdate></span></p>
-<p style="text-align:center; font-size:200%;">Bitte warten. Das Laden der der aktuellen Daten dauert einige Sekunden.</p>
-<p style="text-align:center; font-size:100%;">Zur Nutzung der Tabelle siehe Taste Info.</p>
-<p style="text-align:center; font-size:100%;"></p>
-</div>
+<body>
 </body>
 </html>
